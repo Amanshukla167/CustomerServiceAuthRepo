@@ -166,7 +166,6 @@ public class CustomerLoginAuthServicesImpl implements  CustomerLoginAuthServices
                 address.setState(addressDTO.getState());
 
             }
-            addresses.add(address);
         }
 
 
@@ -199,12 +198,10 @@ public class CustomerLoginAuthServicesImpl implements  CustomerLoginAuthServices
         for(Address address : addresses){
             if(address.getAddressID().equals(addressid)){
                 addressRepo.delete(address);
-
                 addresses.remove(address);
             }
-            customerRepo.save(customer);
         }
-
+        customerRepo.save(customer);
         ResponseDTO responseDTO = new ResponseDTO();
 
         responseDTO.setCustoemrNamr(customer.getCustomerName());
