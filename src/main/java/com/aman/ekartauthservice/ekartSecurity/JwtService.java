@@ -4,6 +4,7 @@ package com.aman.ekartauthservice.ekartSecurity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,15 +16,16 @@ import java.util.Date;
 @Service
 public class JwtService {
 
-    private String SecurityKey = "234ghnm#3454#3hxcvbjuytfvbn87yds2345fvcxzgjw48ism7$qsdcv5432$#$2";
+    @Value("${jwt.secret}")
+    private String SecurityKey; ;
 
     private Key geyKey() {
         byte[] bytes = SecurityKey.getBytes();
         return Keys.hmacShaKeyFor(bytes);
     }
 
-
-    private long Expriation = 1000 * 60 * 15;
+    @Value("${jwt.expiration}")
+    private long Expriation;
 
 
     public String genrateToken(String email, String role) {
@@ -65,7 +67,7 @@ public class JwtService {
       return  extractToken(token).getExpiration().before(new Date());
     }
 
-    public boolean isTokenValid(String email , String token){
+    public boolean isTokenValid(String token , String email){
           return (email.equals(extractEmail(token)) && !isTokenExpired(token));
 
     }

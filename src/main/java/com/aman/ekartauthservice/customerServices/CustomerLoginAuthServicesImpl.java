@@ -162,13 +162,9 @@ public class CustomerLoginAuthServicesImpl implements  CustomerLoginAuthServices
                 address.setDristric(addressDTO.getDristric());
                 address.setPinCode(addressDTO.getPinCode());
                 address.setState(addressDTO.getState());
-
-
             }
             addresses.add(address);
-
             customer.setAddress(addresses);
-
             customerRepo.save(customer);
 
         }

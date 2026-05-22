@@ -30,7 +30,7 @@ import java.util.Optional;
 
         return User.builder()
                 .password(customer.getPassword())
-                .username(customer.getCustomerName())
+                .username(customer.getCustomerEmailID())
                 .roles(customer.getRole().name())
                 .build();
     };
