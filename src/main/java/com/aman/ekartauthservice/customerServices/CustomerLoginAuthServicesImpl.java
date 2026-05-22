@@ -114,9 +114,11 @@ public class CustomerLoginAuthServicesImpl implements  CustomerLoginAuthServices
 
         Optional<Customer> custobj =  customerRepo.findBycustomerEmailID(email);
 
-        ArrayList<Address>  adressList = new ArrayList<Address>();
+//        ArrayList<Address>  adressList = new ArrayList<Address>();
 
         Customer customer = custobj.orElseThrow(()-> new EkartExecption("the Customer is does not exist by this email Id, please try with diffrent one"));
+
+        List<Address> custAddressList = customer.getAddress();
 
         Address address = new Address();
 
@@ -126,9 +128,9 @@ public class CustomerLoginAuthServicesImpl implements  CustomerLoginAuthServices
         address.setPinCode(addressDTO.getPinCode());
         address.setState(addressDTO.getState());
 
-        adressList.add(address);
+        custAddressList.add(address);
 
-        customer.setAddress(adressList);
+        customer.setAddress(custAddressList);
 
         customerRepo.save(customer);
 
@@ -162,12 +164,14 @@ public class CustomerLoginAuthServicesImpl implements  CustomerLoginAuthServices
                 address.setDristric(addressDTO.getDristric());
                 address.setPinCode(addressDTO.getPinCode());
                 address.setState(addressDTO.getState());
+
             }
             addresses.add(address);
-            customer.setAddress(addresses);
-            customerRepo.save(customer);
-
         }
+
+
+        customer.setAddress(addresses);
+        customerRepo.save(customer);
 
         ResponseDTO responseDTO = new ResponseDTO();
 
@@ -198,8 +202,6 @@ public class CustomerLoginAuthServicesImpl implements  CustomerLoginAuthServices
 
                 addresses.remove(address);
             }
-            customer.setAddress(addresses);
-
             customerRepo.save(customer);
         }
 
