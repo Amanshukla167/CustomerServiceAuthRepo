@@ -2,6 +2,7 @@ package com.aman.ekartauthservice.customerServices;
 
 import com.aman.ekartauthservice.customerDTO.AddressDTO;
 import com.aman.ekartauthservice.customerDTO.CustomerDTO;
+import com.aman.ekartauthservice.customerDTO.LoginDTO;
 import com.aman.ekartauthservice.customerDTO.ResponseDTO;
 import com.aman.ekartauthservice.customerEntity.Address;
 import com.aman.ekartauthservice.customerEntity.Customer;
@@ -89,13 +90,13 @@ public class CustomerLoginAuthServicesImpl implements  CustomerLoginAuthServices
     }
 
     @Override
-    public ResponseDTO Login(String email, String Password) throws EkartExecption {
+    public ResponseDTO Login(LoginDTO loginDTO) throws EkartExecption {
 
-        Optional<Customer> custobj =  customerRepo.findBycustomerEmailID(email);
+        Optional<Customer> custobj =  customerRepo.findBycustomerEmailID(loginDTO.getEmail());
 
         Customer customer = custobj.orElseThrow(()-> new EkartExecption("the Customer is does not exist by this email Id, please try with diffrent one"));
 
-         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, Password));
+         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword()));
 
          String token = jwtService.genrateToken(customer.getCustomerEmailID() , customer.getRole().name());
 
