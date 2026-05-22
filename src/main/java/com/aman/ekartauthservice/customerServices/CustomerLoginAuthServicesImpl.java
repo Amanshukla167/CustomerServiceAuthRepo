@@ -195,12 +195,14 @@ public class CustomerLoginAuthServicesImpl implements  CustomerLoginAuthServices
             throw  new EkartExecption("There is no address to delete");
         }
 
-        for(Address address : addresses){
+        addresses.removeIf(address -> {
             if(address.getAddressID().equals(addressid)){
                 addressRepo.delete(address);
-                addresses.remove(address);
+               return  true;
             }
-        }
+            return  false;
+        });
+
         customerRepo.save(customer);
         ResponseDTO responseDTO = new ResponseDTO();
 
