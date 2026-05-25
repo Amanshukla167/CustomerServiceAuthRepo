@@ -115,8 +115,6 @@ public class CustomerLoginAuthServicesImpl implements  CustomerLoginAuthServices
 
         Optional<Customer> custobj =  customerRepo.findBycustomerEmailID(email);
 
-//        ArrayList<Address>  adressList = new ArrayList<Address>();
-
         Customer customer = custobj.orElseThrow(()-> new EkartExecption("the Customer is does not exist by this email Id, please try with diffrent one"));
 
         List<Address> custAddressList = customer.getAddress();
@@ -168,8 +166,6 @@ public class CustomerLoginAuthServicesImpl implements  CustomerLoginAuthServices
 
             }
         }
-
-
         customer.setAddress(addresses);
         customerRepo.save(customer);
 
@@ -190,21 +186,11 @@ public class CustomerLoginAuthServicesImpl implements  CustomerLoginAuthServices
         Optional<Customer> custobj =  customerRepo.findBycustomerEmailID(email);
         Customer customer = custobj.orElseThrow(()-> new EkartExecption("the Customer is does not exist by this email Id, please try with diffrent one"));
 
-        List<Address> addresses =  customer.getAddress();
+      Optional<Address> addressobj = addressRepo.findById(addressid);
+      Address address = addressobj.orElseThrow(() ->  new EkartExecption("the Customer is does not exist by this email Id, please try with diffrent one"));
 
-        if( addresses == null ||addresses.isEmpty()){
-            throw  new EkartExecption("There is no address to delete");
-        }
+       addressRepo.delete(address);
 
-        addresses.removeIf(address -> {
-            if(address.getAddressID().equals(addressid)){
-                addressRepo.delete(address);
-               return  true;
-            }
-            return  false;
-        });
-
-        customerRepo.save(customer);
         ResponseDTO responseDTO = new ResponseDTO();
 
         responseDTO.setCustoemrNamr(customer.getCustomerName());

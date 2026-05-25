@@ -30,7 +30,7 @@ public class CustomerServiceAPI {
      }
 
 
-     @GetMapping(value = "/userLogin/")
+     @GetMapping(value = "/Login")
      public  ResponseEntity<ResponseDTO>Login( @Valid @RequestBody LoginDTO loginDTO) throws EkartExecption{
 
           ResponseDTO responseDTO = customerLoginAuthServices.Login(loginDTO);
