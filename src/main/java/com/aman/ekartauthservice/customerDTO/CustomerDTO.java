@@ -4,6 +4,7 @@ import com.aman.ekartauthservice.customerEntity.Address;
 import com.aman.ekartauthservice.enums.Role;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class CustomerDTO {
 
@@ -14,7 +15,7 @@ public class CustomerDTO {
     private String Password;
     private String customerPhoneNo;
 
-    private AddressDTO address;
+    private List<AddressDTO> address;
 
     private Role role;
 
@@ -66,11 +67,11 @@ public class CustomerDTO {
         this.customerPhoneNo = customerPhoneNo;
     }
 
-    public AddressDTO getAddress() {
+    public List<AddressDTO> getAddress() {
         return address;
     }
 
-    public void setAddress(AddressDTO address) {
+    public void setAddress(List<AddressDTO> address) {
         this.address = address;
     }
 

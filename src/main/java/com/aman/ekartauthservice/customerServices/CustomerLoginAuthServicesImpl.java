@@ -45,6 +45,8 @@ public class CustomerLoginAuthServicesImpl implements  CustomerLoginAuthServices
     @Override
     public ResponseDTO CreateAccount(CustomerDTO customerDTO) throws EkartExecption {
 
+        List<Address>  addresses = new ArrayList<Address>();
+
         Optional<Customer> custObj = customerRepo.findBycustomerEmailID(customerDTO.getCustomerEmailID());
 
          if(custObj.isPresent()){
@@ -59,19 +61,19 @@ public class CustomerLoginAuthServicesImpl implements  CustomerLoginAuthServices
         customer.setPassword(passwordEncoder.encode(customerDTO.getPassword()));
         customer.setRole(Role.valueOf(customerDTO.getRole().name()));
 
-       AddressDTO addressDTO = customerDTO.getAddress();
+        List<AddressDTO> addressDTOList = customerDTO.getAddress();
 
-       Address address = new Address();
+        for(AddressDTO addressDTO : addressDTOList){
+            Address address = new Address();
 
-       address.setHousNo(addressDTO.getHousNo());
-       address.setCity(addressDTO.getCity());
-       address.setDristric(addressDTO.getDristric());
-       address.setPinCode(addressDTO.getPinCode());
-       address.setState(addressDTO.getState());
+            address.setHousNo(addressDTO.getHousNo());
+            address.setCity(addressDTO.getCity());
+            address.setDristric(addressDTO.getDristric());
+            address.setPinCode(addressDTO.getPinCode());
+            address.setState(addressDTO.getState());
 
-       List<Address>  addresses = new ArrayList<Address>();
-
-       addresses.add(address);
+            addresses.add(address);
+        }
 
        customer.setAddress(addresses);
 
