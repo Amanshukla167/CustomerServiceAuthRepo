@@ -57,7 +57,7 @@ public class CustomerLoginAuthServicesImpl implements  CustomerLoginAuthServices
         customer.setCustomerPhoneNo(customerDTO.getCustomerPhoneNo());
         customer.setDOB(customerDTO.getDOB());
         customer.setPassword(passwordEncoder.encode(customerDTO.getPassword()));
-        customer.setRole(Role.valueOf(Role.USER.name()));
+        customer.setRole(Role.valueOf(customerDTO.getRole().name()));
 
        AddressDTO addressDTO = customerDTO.getAddress();
 
